@@ -29,10 +29,7 @@ public class Library {
 
 
     public Optional<Book> takeBook(String title) {
-        if (hasAvailableCopies(title)) {
-            Book book = books.get(title);
-
-            book.setQuantity(book.getQuantity() - 1);
+        if (decrementBookQuantity(title)) {
             return Optional.of(new Book(title, 1));
 
         } else {
@@ -64,6 +61,7 @@ public class Library {
     public Optional<Integer> getTotalBookQuantity() {
         return Optional.of(books.values().stream().mapToInt(Book::getQuantity).sum());
     }
+
 
 
     public boolean decrementBookQuantity(String title) {
