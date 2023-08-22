@@ -4,35 +4,6 @@ import java.util.*;
 
 public class Library {
 
-    private class Book {
-        private final String title;
-        private int quantity;
-
-        Book(String title, int quantity) {
-            if (quantity < 0) {
-                throw new IllegalArgumentException("Quantity cannot be negative");
-            }
-
-            this.title = title;
-            this.quantity = quantity;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(int quantity) {
-            if (quantity < 0) {
-                throw new IllegalArgumentException("Quantity cannot be negative");
-            }
-            this.quantity = quantity;
-        }
-    }
-
     private Map<String, Book> books = new HashMap<>();
 
 
@@ -72,7 +43,6 @@ public class Library {
             }
 
             book.setQuantity(book.getQuantity() - 1);
-
             return Optional.of(new Book(title, 1));
 
         } else {
@@ -84,6 +54,7 @@ public class Library {
     public Optional<Integer> getBookQuantity(String title) {
         if (hasAvailableCopies(title)) {
             return Optional.of(books.get(title).getQuantity());
+
         } else {
             return Optional.empty();
         }
@@ -93,6 +64,7 @@ public class Library {
     public Optional<Set<String>> getAllBookTitles() {
         if (!books.isEmpty()) {
             return Optional.of(books.keySet());
+
         } else {
             return Optional.of(new HashSet<>());
         }
@@ -108,7 +80,6 @@ public class Library {
         if (hasAvailableCopies(title)) {
             Book book = books.get(title);
             book.setQuantity(book.getQuantity() - 1);
-
             return true;
 
         } else {
