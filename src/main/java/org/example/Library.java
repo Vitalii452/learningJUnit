@@ -6,7 +6,6 @@ public class Library {
 
     private Map<String, Book> books = new HashMap<>();
 
-
     public void addBook(String title, int quantity) {
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative");
@@ -25,22 +24,13 @@ public class Library {
     private boolean hasAvailableCopies(String title) {
         Book book = books.get(title);
 
-        if (book != null && book.getQuantity() > 0) {
-            return true;
-
-        } else {
-            return false;
-        }
+        return book != null && book.getQuantity() > 0;
     }
 
 
     public Optional<Book> takeBook(String title) {
         if (hasAvailableCopies(title)) {
             Book book = books.get(title);
-
-            if (book.getQuantity() <= 0) {
-                throw new IllegalStateException("Book quantity is already 0 or less.");
-            }
 
             book.setQuantity(book.getQuantity() - 1);
             return Optional.of(new Book(title, 1));
