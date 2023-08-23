@@ -1,8 +1,9 @@
 package org.example;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
 
 import java.util.*;
 
@@ -17,11 +18,13 @@ class LibraryTest {
         library = new Library();
     }
 
-    @Test
-    void addBook_WithValidTitleAndQuantity_increasesBooksQuantity() {
-        String title = "I love java";
-        int quantity = 3;
-
+    @DisplayName("Adding books with valid title and quantity")
+    @ParameterizedTest
+    @CsvSource({
+            "'The biggest book in the world', 5",
+            "'I love java', 100",
+    })
+    void addBook_WithValidTitleAndQuantity_increasesBooksQuantity(String title, int quantity) {
         library.addBook(title, quantity);
 
         Optional<Integer> bookQuantity = library.getBookQuantity(title);
@@ -41,11 +44,12 @@ class LibraryTest {
         assertTrue(bookTitles.get().contains(title), "Book titles should contain the added title");
     }
 
-    @Test
-    void addBook_WithNotValidQuantity_throwIllegalArgumentException(){
-        String title = "I love java";
-        int quantity = -1;
-
+    @ParameterizedTest
+    @CsvSource({
+            "'Everything about java!', -1",
+            "'Do you like java?', -987654321"
+    })
+    void addBook_WithNotValidQuantity_throwIllegalArgumentException(String title, int quantity){
         assertThrows(IllegalArgumentException.class, () -> library.addBook(title, quantity));
     }
 

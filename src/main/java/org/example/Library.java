@@ -59,9 +59,15 @@ public class Library {
 
 
     public Optional<Integer> getTotalBookQuantity() {
-        return Optional.of(books.values().stream().mapToInt(Book::getQuantity).sum());
-    }
+        int sum = 0;
 
+        for (var entry : books.entrySet()) {
+            sum += entry.getValue().getQuantity();
+        }
+
+        return Optional.of(sum);
+
+    }
 
 
     public boolean decrementBookQuantity(String title) {
